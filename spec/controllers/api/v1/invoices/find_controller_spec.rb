@@ -1,18 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::InvoicesController, type: :controller do
+RSpec.describe Api::V1::Invoices::FindController, type: :controller do
 
   describe "GET #index" do
     it "returns http success" do
-      get :index
+      get :index, params: {customer_id: 1}
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET #show" do
     it "returns http success" do
-      id = Fabricate(:invoice).id
-      get :show, params: {id: id}
+      get :show, params: {id: 1}
       expect(response).to have_http_status(:success)
     end
   end
