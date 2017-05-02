@@ -3,4 +3,5 @@ Fabricator(:invoice) do
   # description { Faker::TwinPeaks.quote}
   customer
   merchant
+  transactions(count: 3)
 end
