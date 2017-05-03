@@ -69,5 +69,13 @@ describe "Invoice API" do
     expect(response).to be_success
     expect(invoices.count).to eq(3)
   end
+  
+  it "can find a random invoice" do
+    Fabricate(:invoice)
+    
+    get "/api/v1/invoices/random"
+
+    expect(response).to be_success
+  end
 
 end

@@ -1,9 +1,15 @@
 class Api::V1::Items::FindController < ApplicationController
   def index
+    if params[:unit_price]
+      params[:unit_price] = (params[:unit_price].to_f * 100).round
+    end
     find_all_params(item_params.keys.first)
   end
 
   def show
+    if params[:unit_price]
+      params[:unit_price] = (params[:unit_price].to_f * 100).round
+    end
     find_params(item_params.keys.first)
   end
   

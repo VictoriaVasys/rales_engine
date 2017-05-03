@@ -64,7 +64,7 @@ describe "Item API" do
   it "can find one item by its unit_price" do
     unit_price = Fabricate(:item).unit_price
     
-    get "/api/v1/items/find?unit_price=#{unit_price}"
+    get "/api/v1/items/find?unit_price=#{unit_price.to_f/100}"
     item = JSON.parse(response.body)
     
     expect(response).to be_success
@@ -82,14 +82,11 @@ describe "Item API" do
   end
   
   it "can find a random item" do
-    merchant = Merchant.create(name: "hi")
-    id = (merchant.items.create(name: "blah", description: "blah blah", unit_price: 3829)).id
+    Fabricate(:item)
     
     get "/api/v1/items/random"
-    item = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(item["id"]).to eq(id)
   end
 
 end

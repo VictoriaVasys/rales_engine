@@ -63,7 +63,7 @@ describe "Invoice Item API" do
   it "can find one invoice_item by its unit_price" do
     unit_price = Fabricate(:invoice_item).unit_price
 
-    get "/api/v1/invoice_items/find?unit_price=#{unit_price}"
+    get "/api/v1/invoice_items/find?unit_price=#{unit_price.to_f/100}"
     invoice_item = JSON.parse(response.body)
 
     expect(response).to be_success
@@ -86,17 +86,11 @@ describe "Invoice Item API" do
   end
   
   it "can find a random invoice_item" do
-    merchant = Merchant.create(name: "hi")
-    customer_id = (Customer.create(first_name: "hii", last_name: "hi hi")).id
-    item = merchant.items.create(name: "blah", description: "blah blah", unit_price: 3829)
-    invoice_id = (merchant.invoices.create(status: "blah", customer_id: customer_id)).id
-    id = (item.invoice_items.create(quantity: 2, unit_price: 3829, invoice_id: invoice_id)).id
+    Fabricate(:invoice_item)
     
     get "/api/v1/invoice_items/random"
-    invoice_item = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(invoice_item["id"]).to eq(id)
   end
 
 end
