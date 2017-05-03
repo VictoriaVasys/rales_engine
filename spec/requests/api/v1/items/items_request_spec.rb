@@ -28,7 +28,7 @@ describe "Item API" do
     item = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(item['merchant']['id']).to eq(merchant_id)
+    expect(item['merchant_id']).to eq(merchant_id)
   end
   
   it "can find one item by its id" do
@@ -68,7 +68,7 @@ describe "Item API" do
     item = JSON.parse(response.body)
     
     expect(response).to be_success
-    expect(item["unit_price"]).to eq(unit_price)
+    expect(item["unit_price"]).to eq((unit_price.to_f/100).to_s)
   end
   
   it "can find all items by merchant_id" do
@@ -82,7 +82,8 @@ describe "Item API" do
   end
   
   it "can find a random item" do
-    id = Fabricate(:item).id
+    merchant = Merchant.create(name: "hi")
+    id = (merchant.items.create(name: "blah", description: "blah blah", unit_price: 3829)).id
     
     get "/api/v1/items/random"
     item = JSON.parse(response.body)
