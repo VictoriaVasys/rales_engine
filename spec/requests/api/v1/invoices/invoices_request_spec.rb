@@ -27,7 +27,7 @@ describe "Invoice API" do
     get "/api/v1/invoices/find?customer_id=#{customer_id}"
     invoice = JSON.parse(response.body)
     expect(response).to be_success
-    expect(invoice["customer"]["id"]).to eq(customer_id)
+    expect(invoice["customer_id"]).to eq(customer_id)
   end
   
   it "can find one invoice by its merchant_id" do
@@ -37,7 +37,7 @@ describe "Invoice API" do
     invoice = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(invoice['merchant']['id']).to eq(merchant_id)
+    expect(invoice['merchant_id']).to eq(merchant_id)
   end
   
   it "can find one invoice by its status" do
