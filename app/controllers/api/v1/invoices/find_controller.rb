@@ -4,11 +4,7 @@ class Api::V1::Invoices::FindController < ApplicationController
   end
 
   def show
-    unless invoice_params.empty?
-      find_params(invoice_params.keys.first)
-    else
-      render json: Invoice.order("RANDOM()").first
-    end
+    find_params(invoice_params.keys.first)
   end
   
   private
