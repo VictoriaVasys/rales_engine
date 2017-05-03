@@ -44,7 +44,21 @@ describe "Customer API" do
     expect(response).to be_success
     expect(customer["last_name"]).to eq(last_name)
   end
-  
+  it "can find all customer by its last_name" do
+    last_name = Fabricate(:customer).last_name
+
+    get "/api/v1/customers/find_all?last_name=#{last_name}"
+    customer = JSON.parse(response.body)
+    expect(response).to be_success
+    expect(customer.first["last_name"]).to eq(last_name)
+  end
+
+  it "returns a random record" do
+    Fabricate(:customer)
+    get '/api/v1/customers/random'
+    expect(response).to be_success
+  end
+
 
 
 end

@@ -64,4 +64,10 @@ describe "Invoice API" do
     expect(invoices.count).to eq(3)
   end
 
+  it "returns a random record" do
+    Fabricate(:invoice)
+    get '/api/v1/invoices/random'
+    expect(response).to be_success
+  end
+
 end
