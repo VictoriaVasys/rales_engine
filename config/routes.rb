@@ -14,6 +14,13 @@ Rails.application.routes.draw do
         get :customer, to: 'invoices/customers#show'
         get :merchant, to: 'invoices/merchants#show'
       end
+      namespace :customers do
+        get 'find', to: 'find#show'
+        get 'find_all', to: 'find#index'
+        get 'random', to: 'random#show'
+      end
+      resources :customers, only: [:index, :show] do
+      end
     end
   end
 
