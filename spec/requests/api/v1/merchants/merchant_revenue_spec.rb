@@ -16,4 +16,12 @@ describe "Merchant BI API" do
     rev = JSON.parse(response.body)
     expect(rev["revenue"]).to eq("0.00")
   end
+
+  it "returns favorite customer for a single merchant" do
+    invoice = Fabricate(:invoice)
+    merchant = invoice.merchant
+    customer = invoice.customer
+    get "/api/v1/merchants/#{merchant.id}/favorite_customer"
+    expect(response).to be_success
+  end
 end
