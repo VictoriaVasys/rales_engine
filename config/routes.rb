@@ -45,6 +45,8 @@ Rails.application.routes.draw do
       end
 
       resources :customers, only: [:index, :show] do
+        get :transactions, to: 'customers/transactions#index'
+        get :invoices, to: 'customers/invoices#index'
       end
 
       namespace :merchants do
@@ -64,6 +66,7 @@ Rails.application.routes.draw do
         get 'random', to: 'random#show'
       end
       resources :transactions, only: [:index, :show] do
+        get :invoice, to: 'transactions/invoice#show'
       end
 
     end

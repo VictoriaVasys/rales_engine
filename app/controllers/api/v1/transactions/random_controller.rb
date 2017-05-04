@@ -1,7 +1,7 @@
 class Api::V1::Transactions::RandomController < ApplicationController
 
   def show
-    render json: Merchant.random
+    render json: Transaction.random
   end
 
 end
