@@ -2,11 +2,11 @@ class Merchant < ApplicationRecord
   has_many :items
   has_many :invoices
 
-  def revenue
-    (invoices.joins(:transactions, :invoice_items).
-    where(transactions: {result: 'success'}).
-    sum('invoice_items.quantity * invoice_items.unit_price').to_f/100).round(2).to_s
-
+  def revenue(date = nil)
+    "%.2f" % (invoices.joins(:transactions, :invoice_items).
+    merge(Transaction.succesful).
+    where(date).
+    sum('invoice_items.quantity * invoice_items.unit_price').to_f/100)
   end
 
   def top_merchants(limit = 5)
