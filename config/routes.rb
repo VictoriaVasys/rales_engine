@@ -54,6 +54,8 @@ Rails.application.routes.draw do
       end
 
       resources :merchants, only: [:index, :show] do
+        get :items, to: 'merchants/items#index'
+        get :invoices, to: 'merchants/invoices#index'
       end
 
       namespace :transactions do
