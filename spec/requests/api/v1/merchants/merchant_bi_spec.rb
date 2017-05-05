@@ -64,7 +64,7 @@ describe "Merchant BI API" do
     customers = JSON.parse(response.body)
     
     expect(response).to be_success
-    expect(customers.count).to eq(2)
+    expect(customers.count).to eq(1)
   end
   
 end
