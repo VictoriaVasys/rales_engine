@@ -2,6 +2,6 @@ class BestDaySerializer < ActiveModel::Serializer
   attributes :best_day
 
   def best_day
-    object.first[:created_at]
+    object.first[:created_at] if object.first
   end
 end

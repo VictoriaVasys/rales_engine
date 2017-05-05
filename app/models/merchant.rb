@@ -35,7 +35,7 @@ class Merchant < ApplicationRecord
   end
   
   def self.customers_with_pending_invoices(merchant_id)
-    sql =Customer.find_by_sql(["
+    Customer.find_by_sql(["
       SELECT customers.* FROM customers
       JOIN invoices 
       ON invoices.customer_id = customers.id
