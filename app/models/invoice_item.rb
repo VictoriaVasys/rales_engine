@@ -12,6 +12,6 @@ class InvoiceItem < ApplicationRecord
       ON transactions.invoice_id = invoices.id
       WHERE transactions.result = 'success'
       AND invoices.created_at = ?", date])
-    { total_revenue: ((total_revenue[0].revenue)/100.00).to_s }
+    { total_revenue: ((total_revenue[0].revenue)/100.00).to_s } if total_revenue[0].revenue
   end
 end

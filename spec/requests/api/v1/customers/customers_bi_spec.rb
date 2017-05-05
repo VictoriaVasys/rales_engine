@@ -5,10 +5,10 @@ describe "Customer BI API" do
     customer = Fabricate(:invoice).customer
     
     get "/api/v1/customers/#{customer.id}/favorite_merchant"
-    merchant = JSON.parse(response.body)
+    merchants = JSON.parse(response.body)
     
     expect(response).to be_success
-    expect(merchant.count).to eq(1)
+    expect(merchants.count).to eq(2)
   end
   
 end
