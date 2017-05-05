@@ -33,6 +33,30 @@ class Merchant < ApplicationRecord
       GROUP BY merchants.id 
       ORDER BY items_sold DESC LIMIT ?;", quantity])
   end
+  
+  def self.customers_with_pending_invoices(merchant_id)
+    sql =Customer.find_by_sql(["
+      SELECT customers.* FROM customers
+      JOIN invoices 
+      ON invoices.customer_id = customers.id
+      JOIN transactions 
+      ON invoices.id = transactions.invoice_id
+      JOIN merchants 
+      ON invoices.merchant_id = merchants.id
+      WHERE merchants.id = ?
+      AND transactions.result = 'failed'
+      EXCEPT
+      SELECT customers.* FROM customers
+      JOIN invoices 
+      ON invoices.customer_id = customers.id
+      JOIN transactions 
+      ON invoices.id = transactions.invoice_id
+      JOIN merchants 
+      ON invoices.merchant_id = merchants.id
+      WHERE merchants.id = ?
+      AND transactions.result = 'success'
+      GROUP BY customers.id;", merchant_id, merchant_id])
+  end
 
   def favorite_customer
     customers.select('customers.*').joins(:transactions).merge(Transaction.succesful).group(:id).order('count(transactions.id) DESC').first

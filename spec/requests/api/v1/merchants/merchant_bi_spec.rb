@@ -60,4 +60,15 @@ describe "Merchant BI API" do
     expect(response).to be_success
     expect(merchants.count).to eq(2)
   end
+  
+  it "returns customers who have pending invoices" do
+    merchant = Fabricate.times(2, :invoice).first.merchant
+    
+    get "/api/v1/merchants/#{merchant.id}/customers_with_pending_invoices"
+    customers = JSON.parse(response.body)
+    
+    expect(response).to be_success
+    expect(customers.count).to eq(2)
+  end
+  
 end
