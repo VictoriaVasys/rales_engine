@@ -10,10 +10,28 @@ class Merchant < ApplicationRecord
     sum('invoice_items.quantity * invoice_items.unit_price').to_f/100)
   end
 
-  def top_merchants(limit = 5)
-    select("sum(invoice_items.unit_price * invoice_items.quantity) as revenue").
+  def self.top_merchants(quantity)
+    select("merchants.*, sum(invoice_items.unit_price * invoice_items.quantity) as revenue").
     joins(invoices: [:invoice_items, :transactions]).
-    where(transactions: {result: 'success'})
+    merge(Transaction.succesful).
+    order('revenue DESC').
+    group(:id).
+    limit(quantity)
+  end
+  
+  def self.top_merchants_by_items(quantity)
+    find_by_sql(["
+      SELECT merchants.*, sum(invoice_items.quantity) AS items_sold 
+      FROM merchants 
+      JOIN invoices 
+      ON merchants.id = invoices.merchant_id 
+      JOIN invoice_items 
+      ON invoices.id = invoice_items.invoice_id 
+      JOIN transactions 
+      ON invoices.id = transactions.invoice_id 
+      WHERE transactions.result = 'success' 
+      GROUP BY merchants.id 
+      ORDER BY items_sold DESC LIMIT ?;", quantity])
   end
 
   def favorite_customer
