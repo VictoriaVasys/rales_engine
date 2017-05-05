@@ -1,7 +1,11 @@
 class FavoriteMerchantSerializer < ActiveModel::Serializer
-  attributes :favorite_merchant
+  attributes :id, :name
 
-  def favorite_merchant
-    object.first.id
+  def id
+    object.first[:id]
+  end
+  
+  def name
+    object.first[:name]
   end
 end
