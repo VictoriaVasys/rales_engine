@@ -11,11 +11,11 @@ The spec harness for this project can be cloned from here: https://github.com/tu
 
 1. Clone down repo
 2. From repo directory, run the following from the Command Line Interface in sequential order:
-  2a. `bundle`
-  2b. `rake nuke`(drops database if one with the same name exists, creates a new database & migrates)
-  2c. `rake seed:all_data` (this may take several minutes)
-  2d. `rails server`
-  2e. `rspec` (optional; runs all rspec tests; to run a singular test, run `rspec spec/<file path>`
+  a. `bundle`
+  b. `rake nuke`(drops database if one with the same name exists, creates a new database & migrates)
+  c. `rake seed:all_data` (this may take several minutes)
+  d. `rails server`
+  e. `rspec` (optional; runs all rspec tests; to run a singular test, run `rspec spec/<file path>`
 3. In order to run the spec harness against the project, clone the rales engine spec harness (linked above), cd into the directory, ensure that the server is running (step 2d.) and run `rake` (to run a singular test, run `ruby test/<file path>`
 
 * Ruby version: 2.3.0 (also works with 2.2.5)
